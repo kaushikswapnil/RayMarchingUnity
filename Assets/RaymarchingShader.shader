@@ -18,7 +18,7 @@
 
             #include "UnityCG.cginc"
 
-            sampler2D _MainTex;
+            uniform sampler2D _MainTex;
             uniform float4x4 _CameraFrustum, _CamToWorld;
 
             uniform float _RM_MAX_DIST;
@@ -88,7 +88,6 @@
                     if (t > _RM_MAX_DIST)
                     {
                         //environment
-                        result = fixed4(rayDir, 1.0f);
                         break;
                     }
 
@@ -104,6 +103,7 @@
                         float diffuseIntensity = dot(lightDir, normalAtPoint);
 
                         result = fixed4(diffuseIntensity, diffuseIntensity, diffuseIntensity, 1.0f);
+                        break;
                     }  
 
                     t += d;                
@@ -133,10 +133,15 @@
 
             fixed4 frag (v2f i) : SV_Target
             {
+                fixed3 colTex = tex2D(_MainTex, i.uv);
+
                 float3 rayDir = normalize(i.ray.xyz);
                 float3 rayOrigin = _WorldSpaceCameraPos;
 
-                fixed4 col = Raymarch(rayOrigin, rayDir);
+                fixed4 result = Raymarch(rayOrigin, rayDir);
+
+                fixed4 col = fixed4((colTex * (1.0 - result.w)) + (result.xyz * result.w), 1.0f);
+
                 return col;
             }
             ENDCG

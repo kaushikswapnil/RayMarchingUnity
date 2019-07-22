@@ -71,6 +71,7 @@ public class RaymarchCamera : SceneViewFilter
 
     	RenderTexture.active = destination;
 
+    	_RaymarchMaterial.SetTexture("_MainTex", source);
     	GL.PushMatrix();
     	GL.LoadOrtho();
 
