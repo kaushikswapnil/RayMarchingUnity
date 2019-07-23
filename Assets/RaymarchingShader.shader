@@ -27,8 +27,12 @@
             uniform float _RM_SURF_DIST;
 
             uniform float3 _LightPos;
+            uniform float _LightAmbientIntensity;
+
+            uniform fixed4 _MainColor;
 
             uniform float4 _Sphere1;
+            uniform float4 _Cube1;
 
             struct appdata
             {
@@ -46,8 +50,8 @@
             float DistanceField(float3 fromPos)
             {
                 float sphere1 = sdSphere(fromPos - float3(_Sphere1.xyz), _Sphere1.w);
-                float torus = sdTorus(fromPos - float3(0, 0, 0), float2(3.0f, 0.2f));
-                return min(sphere1, torus);
+                float cube1 = sdBox(fromPos - float3(_Cube1.xyz), float3(_Cube1.www));
+                return min(sphere1, cube1);
             }
 
             float3 GetNormalAt(float3 p)
@@ -89,8 +93,11 @@
                         lightDir = normalize(lightDir);
 
                         float diffuseIntensity = dot(lightDir, normalAtPoint);
+                        float lightIntensity = diffuseIntensity + _LightAmbientIntensity;
 
-                        result = fixed4(diffuseIntensity, diffuseIntensity, diffuseIntensity, 1.0f);
+                        float3 col = _MainColor.xyz;
+
+                        result = fixed4(col * lightIntensity, 1.0f);
                         break;
                     }  
 

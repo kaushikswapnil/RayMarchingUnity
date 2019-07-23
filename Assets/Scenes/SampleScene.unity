@@ -280,5 +280,8 @@ MonoBehaviour:
   _RM_MaxDist: 1000
   _RM_MaxSteps: 200
   _RM_SurfaceDistance: 0.001
-  _Sphere1: {x: 0, y: 0, z: 0, w: 2}
+  _Sphere1: {x: 0, y: 0, z: 0, w: 2.08}
+  _Cube1: {x: 0, y: 0, z: 0, w: 1.54}
+  _MainColor: {r: 0, g: 0.44053638, b: 0.9622642, a: 0.007843138}
   _LightPos: {x: 0, y: 5, z: 0}
+  _LightAmbientIntensity: 0.5
