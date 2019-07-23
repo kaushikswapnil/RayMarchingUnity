@@ -46,7 +46,7 @@ Shader "Swapnil/RaymarchingShader"
             float DistanceField(float3 fromPos)
             {
                 float sphere1 = sdSphere(fromPos - float3(_Sphere1.xyz), _Sphere1.w);
-                float torus = sdTorus(fromPos - float3(0, 0, 0), float2(1.0f, 0.2f));
+                float torus = sdTorus(fromPos - float3(0, 0, 0), float2(3.0f, 0.2f));
                 return min(sphere1, torus);
             }
 

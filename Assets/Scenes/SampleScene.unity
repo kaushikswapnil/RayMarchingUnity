@@ -309,7 +309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Shader: {fileID: 4800000, guid: cbd0cc42146921a4cbe053a37aedb4cf, type: 3}
   _RM_MaxDist: 1000
-  _RM_MaxSteps: 300
-  _RM_SurfaceDistance: 0.01
-  _Sphere1: {x: 0, y: 0, z: 0, w: 8}
-  _LightPos: {x: 0, y: 5, z: -10}
+  _RM_MaxSteps: 100
+  _RM_SurfaceDistance: 0.001
+  _Sphere1: {x: 0, y: 0, z: 0, w: 2}
+  _LightPos: {x: 0, y: 5, z: -8}
