@@ -45,7 +45,6 @@ public class RaymarchCamera : SceneViewFilter
     }
     private Camera _CameraIntl;
 
-    [ImageEffectOpaque]
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
     	if (!_RaymarchMaterial)
@@ -70,6 +69,8 @@ public class RaymarchCamera : SceneViewFilter
     	_RaymarchMaterial.SetVector("_Sphere1", _Sphere1);
 
     	RenderTexture.active = destination;
+        _RaymarchMaterial.SetTexture("_MainTex", source);
+
 
     	_RaymarchMaterial.SetTexture("_MainTex", source);
     	GL.PushMatrix();
