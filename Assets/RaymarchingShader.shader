@@ -1,4 +1,4 @@
-﻿Shader "Hidden/RaymarchingShader"
+Shader "Swapnil/RaymarchingShader"
 {
     Properties
     {
@@ -17,8 +17,9 @@
             #pragma target 3.0
 
             #include "UnityCG.cginc"
+            #include "DistanceFunctions.cginc"
 
-            sampler2D _MainTex;
+            uniform sampler2D _MainTex;
             uniform float4x4 _CameraFrustum, _CamToWorld;
 
             uniform float _RM_MAX_DIST;
@@ -42,25 +43,11 @@
                 float3 ray : TEXCOORD1;
             };
 
-            float sdTorus(float3 fromPos)
-            {
-                //diameter, thickness
-                float2 torusDimensions = float2(1.0f, 0.2f);
-
-                float2 q = float2(length(fromPos.xz) - torusDimensions.x, fromPos.y);
-
-                return length(q) - torusDimensions.y;
-            }
-
-            float sdSphere(float3 fromPos, float radius)
-            {
-                return length(fromPos)-radius;
-            }
-
             float DistanceField(float3 fromPos)
             {
                 float sphere1 = sdSphere(fromPos - float3(_Sphere1.xyz), _Sphere1.w);
-                return sphere1;
+                float torus = sdTorus(fromPos - float3(0, 0, 0), float2(1.0f, 0.2f));
+                return min(sphere1, torus);
             }
 
             float3 GetNormalAt(float3 p)
@@ -88,7 +75,7 @@
                     if (t > _RM_MAX_DIST)
                     {
                         //environment
-                        result = fixed4(rayDir, 1.0f);
+                        result = fixed4(rayDir, 0.0f);
                         break;
                     }
 
@@ -133,10 +120,15 @@
 
             fixed4 frag (v2f i) : SV_Target
             {
+                fixed3 colText = tex2D(_MainTex, i.uv);
+
                 float3 rayDir = normalize(i.ray.xyz);
                 float3 rayOrigin = _WorldSpaceCameraPos;
 
-                fixed4 col = Raymarch(rayOrigin, rayDir);
+                fixed4 result = Raymarch(rayOrigin, rayDir);
+                
+                fixed4 col = fixed4( (colText * (1.0 - result.w)) + (result.xyz * result.w), 1.0f);
+
                 return col;
             }
             ENDCG
