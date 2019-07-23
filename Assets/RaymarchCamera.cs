@@ -15,10 +15,11 @@ public class RaymarchCamera : SceneViewFilter
 
     public Vector4 _Sphere1;
     public Vector4 _Cube1;
+    public Vector4 _GroundPlane;
 
     public Color _MainColor;
 
-    public Vector3 _LightPos;
+    public Transform _LightTransform;
     public float _LightAmbientIntensity;
 
     public Material _RaymarchMaterial
@@ -67,7 +68,7 @@ public class RaymarchCamera : SceneViewFilter
     	_RaymarchMaterial.SetFloat("_RM_SURF_DIST", _RM_SurfaceDistance);
 
     	//Light
-    	_RaymarchMaterial.SetVector("_LightPos", _LightPos);
+    	_RaymarchMaterial.SetVector("_LightPos", _LightTransform.position);
     	_RaymarchMaterial.SetFloat("_LightAmbientIntensity", _LightAmbientIntensity);
 
     	_RaymarchMaterial.SetColor("_MainColor", _MainColor);
@@ -75,6 +76,7 @@ public class RaymarchCamera : SceneViewFilter
     	//Scene
     	_RaymarchMaterial.SetVector("_Sphere1", _Sphere1);
     	_RaymarchMaterial.SetVector("_Cube1", _Cube1);
+    	_RaymarchMaterial.SetVector("_Ground", _GroundPlane);
 
     	RenderTexture.active = destination;
         _RaymarchMaterial.SetTexture("_MainTex", source);

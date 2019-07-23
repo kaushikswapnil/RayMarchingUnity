@@ -34,6 +34,8 @@
             uniform float4 _Sphere1;
             uniform float4 _Cube1;
 
+            uniform fixed4 _Ground;
+
             struct appdata
             {
                 float4 vertex : POSITION;
@@ -47,11 +49,27 @@
                 float3 ray : TEXCOORD1;
             };
 
-            float DistanceField(float3 fromPos)
+            float DF_Ground(float3 fromPos)
+            {
+                return sdPlane(fromPos, float4(_Ground.xyzw));
+            }
+
+            float DF_Subject(float3 fromPos)
             {
                 float sphere1 = sdSphere(fromPos - float3(_Sphere1.xyz), _Sphere1.w);
                 float cube1 = sdBox(fromPos - float3(_Cube1.xyz), float3(_Cube1.www));
-                return min(sphere1, cube1);
+
+
+                return opS(sphere1, cube1);
+            }
+
+            float DistanceField(float3 fromPos)
+            {
+                //float3 fromPos = float3(fromPos1.xyz);
+                //pMod1(fromPos.x, 4);
+                //pMod1(fromPos.y, 4);
+                //pMod1(fromPos.z, 4);
+                return opU(DF_Subject(fromPos), DF_Ground(fromPos));
             }
 
             float3 GetNormalAt(float3 p)

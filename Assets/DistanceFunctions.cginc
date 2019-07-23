@@ -23,6 +23,13 @@ float sdTorus(float3 p, float2 t)
     return length(q) - t.y;
 }
 
+//Plane
+float sdPlane( float3 p, float4 n )
+{
+  // n must be normalized
+  return dot(p,n.xyz) + n.w;
+}
+
 // BOOLEAN OPERATORS //
 
 // Union
