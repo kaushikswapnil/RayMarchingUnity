@@ -1,4 +1,4 @@
-﻿der "Swapnil/RaymarchingShader"
+﻿shader "Swapnil/RaymarchingShader"
 {
     Properties
     {

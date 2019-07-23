@@ -3,67 +3,68 @@
 using UnityEditor;
 #endif
 
-public class SceneViewFilter : MonoBehaviour {
+public class SceneViewFilter : MonoBehaviour
+{
 #if UNITY_EDITOR
-	bool hasChanged = false;
+    bool hasChanged = false;
 
-	public virtual void OnValidate ()
-	{ 
-		hasChanged = true; 
-	}
-	
-	static SceneViewFilter  ()
-	{
-		SceneView.duringSceneGui += CheckMe;
-	}
+    public virtual void OnValidate()
+    {
+        hasChanged = true;
+    }
 
-	static void CheckMe (SceneView sv)
-	{
-		if (Event.current.type != EventType.Layout)
-			return;
-		if (!Camera.main)
-			return;
-		// Get a list of everything on the main camera that should be synced.
-		SceneViewFilter[] cameraFilters = Camera.main.GetComponents<SceneViewFilter> ();
-		SceneViewFilter[] sceneFilters = sv.camera.GetComponents<SceneViewFilter> ();
+    static SceneViewFilter()
+    {
+        SceneView.onSceneGUIDelegate += CheckMe;
+    }
 
-		// Let's see if the lists are different lengths or something like that. 
-		// If so, we simply destroy all scene filters and recreate from maincame
-		if (cameraFilters.Length != sceneFilters.Length)
-		{
-			Recreate (sv);
-			return;
-		}
-		for (int i = 0; i < cameraFilters.Length; i++)
-		{
-			if (cameraFilters[i].GetType() != sceneFilters[i].GetType())
-			{
-				Recreate (sv);
-				return;
-			}
-		}
+    static void CheckMe(SceneView sv)
+    {
+        if (Event.current.type != EventType.Layout)
+            return;
+        if (!Camera.main)
+            return;
+        // Get a list of everything on the main camera that should be synced.
+        SceneViewFilter[] cameraFilters = Camera.main.GetComponents<SceneViewFilter>();
+        SceneViewFilter[] sceneFilters = sv.camera.GetComponents<SceneViewFilter>();
 
-		// Ok, WHICH filters, or their order hasn't changed.
-		// Let's copy all settings for any filter that has changed.
-		for (int i = 0; i < cameraFilters.Length; i++)
-		if (cameraFilters[i].hasChanged || sceneFilters[i].enabled != cameraFilters[i].enabled)
-		{
-			EditorUtility.CopySerialized (cameraFilters[i], sceneFilters[i]);
-			cameraFilters[i].hasChanged = false;
-		}
-	}
+        // Let's see if the lists are different lengths or something like that. 
+        // If so, we simply destroy all scene filters and recreate from maincame
+        if (cameraFilters.Length != sceneFilters.Length)
+        {
+            Recreate(sv);
+            return;
+        }
+        for (int i = 0; i < cameraFilters.Length; i++)
+        {
+            if (cameraFilters[i].GetType() != sceneFilters[i].GetType())
+            {
+                Recreate(sv);
+                return;
+            }
+        }
 
-	static void Recreate (SceneView sv)
-	{
-		SceneViewFilter filter;
-		while (filter = sv.camera.GetComponent<SceneViewFilter> ())
-			DestroyImmediate (filter);
+        // Ok, WHICH filters, or their order hasn't changed.
+        // Let's copy all settings for any filter that has changed.
+        for (int i = 0; i < cameraFilters.Length; i++)
+            if (cameraFilters[i].hasChanged || sceneFilters[i].enabled != cameraFilters[i].enabled)
+            {
+                EditorUtility.CopySerialized(cameraFilters[i], sceneFilters[i]);
+                cameraFilters[i].hasChanged = false;
+            }
+    }
 
-		foreach (SceneViewFilter f in Camera.main.GetComponents<SceneViewFilter> ())
-		{
-			SceneViewFilter newFilter = sv.camera.gameObject.AddComponent (f.GetType()) as SceneViewFilter;
-			EditorUtility.CopySerialized (f, newFilter);
-		}
-	}
+    static void Recreate(SceneView sv)
+    {
+        SceneViewFilter filter;
+        while (filter = sv.camera.GetComponent<SceneViewFilter>())
+            DestroyImmediate(filter);
+
+        foreach (SceneViewFilter f in Camera.main.GetComponents<SceneViewFilter>())
+        {
+            SceneViewFilter newFilter = sv.camera.gameObject.AddComponent(f.GetType()) as SceneViewFilter;
+            EditorUtility.CopySerialized(f, newFilter);
+        }
+    }
 #endif
 }
