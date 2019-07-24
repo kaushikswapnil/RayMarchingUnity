@@ -72,6 +72,16 @@
                 return opU(DF_Subject(fromPos), DF_Ground(fromPos));
             }
 
+            float GetLightIntensityAt(float3 fromPos, float3 normalAtPoint)
+            {
+                float3 lightDir = (_LightPos- fromPos);
+                lightDir = normalize(lightDir);
+
+                float diffuseIntensity = dot(lightDir, normalAtPoint);
+
+                return diffuseIntensity + _LightAmbientIntensity;
+            }
+
             float3 GetNormalAt(float3 p)
             {
                 float2 epsilon = float2(0.01f, 0.0f);
@@ -106,12 +116,8 @@
                     
                     if (d < _RM_SURF_DIST)
                     {
-                        float3 normalAtPoint = GetNormalAt(samplePos);
-                        float3 lightDir = (_LightPos- samplePos);
-                        lightDir = normalize(lightDir);
-
-                        float diffuseIntensity = dot(lightDir, normalAtPoint);
-                        float lightIntensity = diffuseIntensity + _LightAmbientIntensity;
+                        float3 normalAtPoint = GetNormalAt(samplePos);                        
+                        float lightIntensity = GetLightIntensityAt(samplePos, normalAtPoint);
 
                         float3 col = _MainColor.xyz;
 
