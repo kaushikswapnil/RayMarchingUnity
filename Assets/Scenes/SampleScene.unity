@@ -308,6 +308,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcdc44dac6207a0478a93072b9c99492, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _Shader: {fileID: 4800000, guid: e4da0e23dfd3e22448f100f0d5a9589f, type: 3}
+  _RM_MaxDist: 1000
+  _RM_MaxSteps: 500
+  _RM_SurfaceDistance: 0.001
+  _Sphere1: {x: 0, y: 0, z: 0, w: 1.39}
+  _Cube1: {x: 0, y: 0, z: 0, w: 1.14}
+  _GroundPlane: {x: 0, y: 1, z: 0, w: 8.08}
+  _MainColor: {r: 1, g: 0, b: 0, a: 0}
+  _LightTransform: {fileID: 170076735}
+  _LightAmbientIntensity: 0.01
 --- !u!114 &534669907
 MonoBehaviour:
   m_ObjectHideFlags: 0
