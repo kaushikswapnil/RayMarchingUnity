@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 6}
-  m_MinSize: {x: 950, y: 544}
+  m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_MinSize: {x: 510, y: 494}
   m_MaxSize: {x: 14006, y: 14044}
   vertical: 0
-  controlID: 76
+  controlID: 12
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -150,7 +150,7 @@ MonoBehaviour:
     y: 0
     width: 1522
     height: 767
-  m_MinSize: {x: 950, y: 544}
+  m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &7
 MonoBehaviour:
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 494}
   m_MaxSize: {x: 10002, y: 14044}
   vertical: 1
-  controlID: 77
+  controlID: 13
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 222}
   m_MaxSize: {x: 8006, y: 4022}
   vertical: 0
-  controlID: 78
+  controlID: 14
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -403,8 +403,7 @@ MonoBehaviour:
       folders:
         keys:
         - Library
-        - Library\gfu
-        - Library\gfu\cache
+        - Library\ScriptAssemblies
         values:
         - path: Library
           label: Library
@@ -424,27 +423,9 @@ MonoBehaviour:
             originalPath: 
             indexStatus: 0
             workTreeStatus: 0
-        - path: Library\gfu
-          label: gfu
+        - path: Library\ScriptAssemblies
+          label: ScriptAssemblies
           level: 1
-          isFolder: 1
-          isContainer: 0
-          isCollapsed: 0
-          isHidden: 0
-          isActive: 0
-          treeIsCheckable: 1
-          checkState: 0
-          isLocked: 0
-          gitStatusEntry:
-            path: 
-            fullPath: 
-            projectPath: 
-            originalPath: 
-            indexStatus: 0
-            workTreeStatus: 0
-        - path: Library\gfu\cache
-          label: cache
-          level: 2
           isFolder: 1
           isContainer: 0
           isCollapsed: 0
@@ -506,8 +487,26 @@ MonoBehaviour:
           originalPath: 
           indexStatus: 0
           workTreeStatus: 0
-      - path: Library\gfu
-        label: gfu
+      - path: Library\EditorInstance.json
+        label: EditorInstance.json
+        level: 1
+        isFolder: 0
+        isContainer: 0
+        isCollapsed: 0
+        isHidden: 0
+        isActive: 0
+        treeIsCheckable: 1
+        checkState: 0
+        isLocked: 0
+        gitStatusEntry:
+          path: Library\EditorInstance.json
+          fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\EditorInstance.json
+          projectPath: Library\EditorInstance.json
+          originalPath: 
+          indexStatus: 1
+          workTreeStatus: 1
+      - path: Library\ScriptAssemblies
+        label: ScriptAssemblies
         level: 1
         isFolder: 1
         isContainer: 0
@@ -524,27 +523,9 @@ MonoBehaviour:
           originalPath: 
           indexStatus: 0
           workTreeStatus: 0
-      - path: Library\gfu\cache
-        label: cache
+      - path: Library\ScriptAssemblies\Unity.Analytics.DataPrivacy.dll
+        label: Unity.Analytics.DataPrivacy.dll
         level: 2
-        isFolder: 1
-        isContainer: 0
-        isCollapsed: 0
-        isHidden: 0
-        isActive: 0
-        treeIsCheckable: 1
-        checkState: 0
-        isLocked: 0
-        gitStatusEntry:
-          path: 
-          fullPath: 
-          projectPath: 
-          originalPath: 
-          indexStatus: 0
-          workTreeStatus: 0
-      - path: Library\gfu\cache\branches.yaml
-        label: branches.yaml
-        level: 3
         isFolder: 0
         isContainer: 0
         isCollapsed: 0
@@ -554,15 +535,15 @@ MonoBehaviour:
         checkState: 0
         isLocked: 0
         gitStatusEntry:
-          path: Library\gfu\cache\branches.yaml
-          fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\gfu\cache\branches.yaml
-          projectPath: Library\gfu\cache\branches.yaml
+          path: Library\ScriptAssemblies\Unity.Analytics.DataPrivacy.dll
+          fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ScriptAssemblies\Unity.Analytics.DataPrivacy.dll
+          projectPath: Library\ScriptAssemblies\Unity.Analytics.DataPrivacy.dll
           originalPath: 
           indexStatus: 0
           workTreeStatus: 3
-      - path: Library\gfu\cache\gittrackingstatus.yaml
-        label: gittrackingstatus.yaml
-        level: 3
+      - path: Library\ScriptAssemblies\Unity.CollabProxy.Editor.dll
+        label: Unity.CollabProxy.Editor.dll
+        level: 2
         isFolder: 0
         isContainer: 0
         isCollapsed: 0
@@ -572,9 +553,45 @@ MonoBehaviour:
         checkState: 0
         isLocked: 0
         gitStatusEntry:
-          path: Library\gfu\cache\gittrackingstatus.yaml
-          fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\gfu\cache\gittrackingstatus.yaml
-          projectPath: Library\gfu\cache\gittrackingstatus.yaml
+          path: Library\ScriptAssemblies\Unity.CollabProxy.Editor.dll
+          fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ScriptAssemblies\Unity.CollabProxy.Editor.dll
+          projectPath: Library\ScriptAssemblies\Unity.CollabProxy.Editor.dll
+          originalPath: 
+          indexStatus: 0
+          workTreeStatus: 3
+      - path: Library\ScriptAssemblies\Unity.TextMeshPro.dll
+        label: Unity.TextMeshPro.dll
+        level: 2
+        isFolder: 0
+        isContainer: 0
+        isCollapsed: 0
+        isHidden: 0
+        isActive: 0
+        treeIsCheckable: 1
+        checkState: 0
+        isLocked: 0
+        gitStatusEntry:
+          path: Library\ScriptAssemblies\Unity.TextMeshPro.dll
+          fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ScriptAssemblies\Unity.TextMeshPro.dll
+          projectPath: Library\ScriptAssemblies\Unity.TextMeshPro.dll
+          originalPath: 
+          indexStatus: 0
+          workTreeStatus: 3
+      - path: Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll
+        label: Unity.TextMeshPro.Editor.dll
+        level: 2
+        isFolder: 0
+        isContainer: 0
+        isCollapsed: 0
+        isHidden: 0
+        isActive: 0
+        treeIsCheckable: 1
+        checkState: 0
+        isLocked: 0
+        gitStatusEntry:
+          path: Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll
+          fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll
+          projectPath: Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll
           originalPath: 
           indexStatus: 0
           workTreeStatus: 3
@@ -598,27 +615,45 @@ MonoBehaviour:
           indexStatus: 0
           workTreeStatus: 0
     gitStatusEntries:
-    - path: Library\gfu\cache\branches.yaml
-      fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\gfu\cache\branches.yaml
-      projectPath: Library\gfu\cache\branches.yaml
+    - path: Library\EditorInstance.json
+      fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\EditorInstance.json
+      projectPath: Library\EditorInstance.json
+      originalPath: 
+      indexStatus: 1
+      workTreeStatus: 1
+    - path: Library\ScriptAssemblies\Unity.Analytics.DataPrivacy.dll
+      fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ScriptAssemblies\Unity.Analytics.DataPrivacy.dll
+      projectPath: Library\ScriptAssemblies\Unity.Analytics.DataPrivacy.dll
       originalPath: 
       indexStatus: 0
       workTreeStatus: 3
-    - path: Library\gfu\cache\gittrackingstatus.yaml
-      fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\gfu\cache\gittrackingstatus.yaml
-      projectPath: Library\gfu\cache\gittrackingstatus.yaml
+    - path: Library\ScriptAssemblies\Unity.CollabProxy.Editor.dll
+      fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ScriptAssemblies\Unity.CollabProxy.Editor.dll
+      projectPath: Library\ScriptAssemblies\Unity.CollabProxy.Editor.dll
       originalPath: 
       indexStatus: 0
       workTreeStatus: 3
-    changedFilesText: 2 changed files
+    - path: Library\ScriptAssemblies\Unity.TextMeshPro.dll
+      fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ScriptAssemblies\Unity.TextMeshPro.dll
+      projectPath: Library\ScriptAssemblies\Unity.TextMeshPro.dll
+      originalPath: 
+      indexStatus: 0
+      workTreeStatus: 3
+    - path: Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll
+      fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll
+      projectPath: Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll
+      originalPath: 
+      indexStatus: 0
+      workTreeStatus: 3
+    changedFilesText: 5 changed files
     lastCurrentBranchChangedEvent:
-      updatedTimeString: 2019-07-25T20:59:35.165+05:30
+      updatedTimeString: 2019-07-25T21:00:37.636+05:30
       cacheType: 1
     lastStatusEntriesChangedEvent:
-      updatedTimeString: 2019-07-25T20:59:12.044+05:30
+      updatedTimeString: 2019-07-25T21:00:36.501+05:30
       cacheType: 6
     lastLocksChangedEvent:
-      updatedTimeString: 0001-01-01T00:00:00.000+00:00
+      updatedTimeString: 2019-07-25T21:00:39.436+05:30
       cacheType: 7
   historyView:
     currentLogHasUpdate: 0
@@ -775,13 +810,13 @@ MonoBehaviour:
     m_Image: {fileID: 0}
     m_Tooltip: Url of the origin remote
   lastCurrentBranchAndRemoteChangedEvent:
-    updatedTimeString: 2019-07-25T20:59:35.165+05:30
+    updatedTimeString: 2019-07-25T21:00:37.636+05:30
     cacheType: 1
   lastTrackingStatusChangedEvent:
-    updatedTimeString: 2019-07-25T20:59:35.136+05:30
+    updatedTimeString: 2019-07-25T21:00:36.522+05:30
     cacheType: 5
   lastStatusEntriesChangedEvent:
-    updatedTimeString: 2019-07-25T20:59:12.044+05:30
+    updatedTimeString: 2019-07-25T21:00:36.501+05:30
     cacheType: 6
   pullButtonContent:
     m_Text: Pull
@@ -992,7 +1027,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

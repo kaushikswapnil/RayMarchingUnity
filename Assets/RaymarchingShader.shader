@@ -29,6 +29,7 @@
             uniform float _ShadowDistMin;
             uniform float _ShadowDistMax;
             uniform float _ShadowIntensity;
+            uniform float _PenumbraFactor;
 
             uniform float3 _LightPos;
             uniform float _LightAmbientIntensity;
@@ -76,39 +77,67 @@
                 return opU(DF_Subject(fromPos), DF_Ground(fromPos));
             }
 
+            float CalculateHardShadowAt(float3 p, float3 rd, float tMin, float tMax)
+            {
+            	//Check if point is in shadow
+                float t = tMin;
+                float3 ro = p;
+
+                float shadowIntensity = 1.f;
+
+                while (t < tMax)
+                {
+                    float d = DistanceField(ro + (rd*t));
+                    if (d < 0.001)
+                    {
+                        shadowIntensity = 0.0f;
+                        break;
+                    }
+
+                    t += d;
+                }
+
+                return shadowIntensity;
+            }
+
+            float CalculateSoftShadowAt(float3 p, float3 rd, float tMin, float tMax, float k)
+            {
+            	//Check if point is in shadow
+                float t = tMin;
+                float3 ro = p;
+
+                float shadowIntensity = 1.f;
+
+                while (t < tMax)
+                {
+                    float d = DistanceField(ro + (rd*t));
+                    if (d < 0.001)
+                    {
+                        shadowIntensity = 0.0f;
+                        break;
+                    }
+
+                    shadowIntensity = min(shadowIntensity, k*d/t);
+
+                    t += d;
+                }
+
+                return shadowIntensity;
+            }
+
             float GetLightIntensityAt(float3 fromPos, float3 normalAtPoint)
             {
                 float3 dispToLight = _LightPos- fromPos;
                 float3 lightDir = normalize(dispToLight);
 
                 float diffuseIntensity = dot(lightDir, normalAtPoint);
-                float shadowIntensity = 0.0f;
+                float shadowIntensity = CalculateSoftShadowAt(fromPos, lightDir, _ShadowDistMin, _ShadowDistMax, _PenumbraFactor);
 
-                //Check if point is in shadow
-                {
-                    float tMin = _ShadowDistMin;
-                    float tMax = _ShadowDistMax;
+                shadowIntensity = shadowIntensity*0.5 + 0.5;
 
-                    float t = 0.0f;
-                    float3 ro = fromPos;
-                    float3 rd = lightDir;
+                shadowIntensity = max(0.0f, pow(shadowIntensity, _ShadowIntensity));
 
-                    for (t = tMin; t < tMax; ++t)
-                    {
-                        float d = DistanceField(ro + (rd*t));
-                        if (d < _RM_SURF_DIST)
-                        {
-                            shadowIntensity = 1.0f;
-                            break;
-                        }
-
-                        t += d;
-                    }
-                }
-
-                shadowIntensity = min(shadowIntensity, _ShadowIntensity);
-
-                diffuseIntensity *= (1 - shadowIntensity);
+                diffuseIntensity *= shadowIntensity;
 
                 return diffuseIntensity + _LightAmbientIntensity;
             }
