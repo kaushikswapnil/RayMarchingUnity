@@ -74,10 +74,35 @@
 
             float GetLightIntensityAt(float3 fromPos, float3 normalAtPoint)
             {
-                float3 lightDir = (_LightPos- fromPos);
-                lightDir = normalize(lightDir);
+                float3 dispToLight = _LightPos- fromPos;
+                float3 lightDir = normalize(dispToLight);
 
                 float diffuseIntensity = dot(lightDir, normalAtPoint);
+                float shadowIntensity = 0.0f;
+
+                //Check if point is in shadow
+                {
+                    float tMin = _RM_SURF_DIST*2;
+                    float tMax = length(dispToLight);
+
+                    float t = 0.0f;
+                    float3 ro = fromPos;
+                    float3 rd = lightDir;
+
+                    for (t = tMin; t < tMax; ++t)
+                    {
+                        float d = DistanceField(ro + (rd*t));
+                        if (d < _RM_SURF_DIST)
+                        {
+                            shadowIntensity = (tMax-t)/tMax;
+                            break;
+                        }
+
+                        t += d;
+                    }
+                }
+
+                diffuseIntensity *= (1 - shadowIntensity);
 
                 return diffuseIntensity + _LightAmbientIntensity;
             }
