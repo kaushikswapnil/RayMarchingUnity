@@ -14,6 +14,14 @@ float sdBox(float3 p, float3 b)
 		length(max(d, 0.0));
 }
 
+//Round box
+float sdRoundBox( float3 p, float3 b, float r )
+{
+  float3 d = abs(p) - b;
+  return length(max(d,0.0)) - r
+         + min(max(d.x,max(d.y,d.z)),0.0); // remove this line for an only partially signed sdf 
+}
+
 //Torus
 //t (torus)
 float sdTorus(float3 p, float2 t)

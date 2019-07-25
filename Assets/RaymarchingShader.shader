@@ -26,6 +26,10 @@
             uniform int _RM_MAX_STEPS;
             uniform float _RM_SURF_DIST;
 
+            uniform float _ShadowDistMin;
+            uniform float _ShadowDistMax;
+            uniform float _ShadowIntensity;
+
             uniform float3 _LightPos;
             uniform float _LightAmbientIntensity;
 
@@ -57,7 +61,7 @@
             float DF_Subject(float3 fromPos)
             {
                 float sphere1 = sdSphere(fromPos - float3(_Sphere1.xyz), _Sphere1.w);
-                float cube1 = sdBox(fromPos - float3(_Cube1.xyz), float3(_Cube1.www));
+                float cube1 = sdRoundBox(fromPos - float3(_Cube1.xyz), float3(_Cube1.www), _Cube1.w);
 
 
                 return opS(sphere1, cube1);
@@ -82,8 +86,8 @@
 
                 //Check if point is in shadow
                 {
-                    float tMin = _RM_SURF_DIST*2;
-                    float tMax = length(dispToLight);
+                    float tMin = _ShadowDistMin;
+                    float tMax = _ShadowDistMax;
 
                     float t = 0.0f;
                     float3 ro = fromPos;
@@ -94,13 +98,15 @@
                         float d = DistanceField(ro + (rd*t));
                         if (d < _RM_SURF_DIST)
                         {
-                            shadowIntensity = (tMax-t)/tMax;
+                            shadowIntensity = 1.0f;
                             break;
                         }
 
                         t += d;
                     }
                 }
+
+                shadowIntensity = min(shadowIntensity, _ShadowIntensity);
 
                 diffuseIntensity *= (1 - shadowIntensity);
 

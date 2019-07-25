@@ -22,6 +22,10 @@ public class RaymarchCamera : SceneViewFilter
     public Transform _LightTransform;
     public float _LightAmbientIntensity;
 
+    public float _ShadowDistMin;
+    public float _ShadowDistMax;
+    public float _ShadowIntensity;
+
     public Material _RaymarchMaterial
     {
     	get
@@ -72,6 +76,10 @@ public class RaymarchCamera : SceneViewFilter
     	_RaymarchMaterial.SetFloat("_LightAmbientIntensity", _LightAmbientIntensity);
 
     	_RaymarchMaterial.SetColor("_MainColor", _MainColor);
+
+    	_RaymarchMaterial.SetFloat("_ShadowIntensity", _ShadowIntensity);
+    	_RaymarchMaterial.SetFloat("_ShadowDistMin", _ShadowDistMin);
+    	_RaymarchMaterial.SetFloat("_ShadowDistMax", _ShadowDistMax);
 
     	//Scene
     	_RaymarchMaterial.SetVector("_Sphere1", _Sphere1);
