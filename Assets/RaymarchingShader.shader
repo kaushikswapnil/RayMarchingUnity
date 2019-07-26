@@ -118,7 +118,7 @@
                     }
                     else if (t > distToLight)
                     {
-                    	shadowIntensity = 1.0f;
+                    	//shadowIntensity = 1.0f;
                     	break;
                     }
 
