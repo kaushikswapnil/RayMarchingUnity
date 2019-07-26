@@ -32,12 +32,14 @@
             uniform float _PenumbraFactor;
 
             uniform float3 _LightPos;
+            uniform fixed4 _LightColor;
             uniform float _LightAmbientIntensity;
 
             uniform fixed4 _MainColor;
 
             uniform float4 _Sphere1;
             uniform float4 _Cube1;
+            uniform float _Cube1RoundingRadius;
 
             uniform fixed4 _Ground;
 
@@ -62,7 +64,7 @@
             float DF_Subject(float3 fromPos)
             {
                 float sphere1 = sdSphere(fromPos - float3(_Sphere1.xyz), _Sphere1.w);
-                float cube1 = sdRoundBox(fromPos - float3(_Cube1.xyz), float3(_Cube1.www), _Cube1.w);
+                float cube1 = sdRoundBox(fromPos - float3(_Cube1.xyz), float3(_Cube1.www), _Cube1RoundingRadius);
 
 
                 return opS(sphere1, cube1);
@@ -77,7 +79,7 @@
                 return opU(DF_Subject(fromPos), DF_Ground(fromPos));
             }
 
-            float CalculateHardShadowAt(float3 p, float3 rd, float tMin, float tMax)
+            float CalculateHardShadowInvAt(float3 p, float3 rd, float tMin, float tMax)
             {
             	//Check if point is in shadow
                 float t = tMin;
@@ -100,12 +102,10 @@
                 return shadowIntensity;
             }
 
-            float CalculateSoftShadowAt(float3 p, float3 rd, float tMin, float tMax, float k)
+            float CalculateSoftShadowInvAt(float3 ro, float3 rd, float tMin, float tMax, float k, float distToLight)
             {
             	//Check if point is in shadow
                 float t = tMin;
-                float3 ro = p;
-
                 float shadowIntensity = 1.f;
 
                 while (t < tMax)
@@ -116,8 +116,13 @@
                         shadowIntensity = 0.0f;
                         break;
                     }
+                    else if (t > distToLight)
+                    {
+                    	shadowIntensity = 1.0f;
+                    	break;
+                    }
 
-                    shadowIntensity = min(shadowIntensity, k*d/t);
+			        shadowIntensity = min( shadowIntensity, k*d/t );
 
                     t += d;
                 }
@@ -125,21 +130,31 @@
                 return shadowIntensity;
             }
 
-            float GetLightIntensityAt(float3 fromPos, float3 normalAtPoint)
+            float3 GetLightIntensityAt(float3 fromPos, float3 normalAtPoint)
             {
                 float3 dispToLight = _LightPos- fromPos;
                 float3 lightDir = normalize(dispToLight);
 
-                float diffuseIntensity = dot(lightDir, normalAtPoint);
-                float shadowIntensity = CalculateSoftShadowAt(fromPos, lightDir, _ShadowDistMin, _ShadowDistMax, _PenumbraFactor);
+                float diffuseIntensity = (dot(lightDir, normalAtPoint)*0.5) + 0.5;
+                float shadowIntensity = CalculateSoftShadowInvAt(fromPos, lightDir, _ShadowDistMin, _ShadowDistMax, _PenumbraFactor, dispToLight);
 
-                shadowIntensity = shadowIntensity*0.5 + 0.5;
+                //shadowIntensity = shadowIntensity*0.5 + 0.5;
 
                 shadowIntensity = max(0.0f, pow(shadowIntensity, _ShadowIntensity));
 
-                diffuseIntensity *= shadowIntensity;
+                float totalLightIntensity = diffuseIntensity + _LightAmbientIntensity;
 
-                return diffuseIntensity + _LightAmbientIntensity;
+                totalLightIntensity *= shadowIntensity;
+
+                return _LightColor.rgb * totalLightIntensity;
+            }
+
+            float3 CalculateShading(float3 p, float3 n)
+            {
+            	float3 lightIntensity = GetLightIntensityAt(p, n);
+            	float3 mainCol = _MainColor.xyz;
+
+            	return mainCol*lightIntensity;
             }
 
             float3 GetNormalAt(float3 p)
@@ -176,12 +191,9 @@
                     
                     if (d < _RM_SURF_DIST)
                     {
-                        float3 normalAtPoint = GetNormalAt(samplePos);                        
-                        float lightIntensity = GetLightIntensityAt(samplePos, normalAtPoint);
-
-                        float3 col = _MainColor.xyz;
-
-                        result = fixed4(col * lightIntensity, 1.0f);
+                        float3 shading = CalculateShading(samplePos, GetNormalAt(samplePos));
+                        
+                        result = fixed4(shading, 1.0f);
                         break;
                     }  
 
