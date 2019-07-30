@@ -1,4 +1,14 @@
-﻿shader "Swapnil/RaymarchingShader"
+﻿// Upgrade NOTE: commented out 'float3 _WorldSpaceCameraPos', a built-in variable
+
+// Upgrade NOTE: commented out 'float3 _WorldSpaceCameraPos', a built-in variable
+
+// Upgrade NOTE: commented out 'float3 _WorldSpaceCameraPos', a built-in variable
+
+// Upgrade NOTE: commented out 'float3 _WorldSpaceCameraPos', a built-in variable
+
+// Upgrade NOTE: commented out 'float3 _WorldSpaceCameraPos', a built-in variable
+
+shader "Swapnil/RaymarchingShader"
 {
     Properties
     {
@@ -65,6 +75,7 @@
             {
                 float sphere1 = sdSphere(fromPos - float3(_Sphere1.xyz), _Sphere1.w);
                 float cube1 = sdRoundBox(fromPos - float3(_Cube1.xyz), float3(_Cube1.www), _Cube1RoundingRadius);
+                //float cube1 = sdBox(fromPos - float3(_Cube1.xyz), float3(_Cube1.www));
 
 
                 return opS(sphere1, cube1);
@@ -79,7 +90,7 @@
                 return opU(DF_Subject(fromPos), DF_Ground(fromPos));
             }
 
-            float CalculateHardShadowInvAt(float3 p, float3 rd, float tMin, float tMax)
+            float CalculateHardShadowInvAt(float3 p, float3 rd, float tMin, float tMax, float dispToLight)
             {
             	//Check if point is in shadow
                 float t = tMin;
@@ -89,11 +100,15 @@
 
                 while (t < tMax)
                 {
-                    float d = DistanceField(ro + (rd*t));
+                    float d = DF_Subject(ro + (rd*t)); //Should be distance field but we dont want ground to have a shadow
                     if (d < 0.001)
                     {
                         shadowIntensity = 0.0f;
                         break;
+                    }
+                    if (t > dispToLight) //dont travel farther than the light
+                    {
+                    	break;
                     }
 
                     t += d;
@@ -110,17 +125,17 @@
 
                 while (t < tMax)
                 {
-                    float d = DistanceField(ro + (rd*t));
+                    float d = DF_Subject(ro + (rd*t));
                     if (d < 0.001)
                     {
                         shadowIntensity = 0.0f;
                         break;
                     }
-                    else if (t > distToLight)
-                    {
+                    //else if (t > distToLight)
+                    //{
                     	//shadowIntensity = 1.0f;
-                    	break;
-                    }
+                    	//break;
+                    //}
 
 			        shadowIntensity = min( shadowIntensity, k*d/t );
 
@@ -138,7 +153,9 @@
                 float diffuseIntensity = (dot(lightDir, normalAtPoint)*0.5) + 0.5;
                 float shadowIntensity = CalculateSoftShadowInvAt(fromPos, lightDir, _ShadowDistMin, _ShadowDistMax, _PenumbraFactor, dispToLight);
 
-                //shadowIntensity = shadowIntensity*0.5 + 0.5;
+                //float shadowIntensity = CalculateHardShadowInvAt(fromPos, lightDir, _ShadowDistMin, _ShadowDistMax, dispToLight);
+
+                shadowIntensity = shadowIntensity*0.5 + 0.5;
 
                 shadowIntensity = max(0.0f, pow(shadowIntensity, _ShadowIntensity));
 
@@ -174,7 +191,7 @@
             {
                 fixed4 result = fixed4(0, 0, 0, 0);
 
-                float t = 0.0f;
+                float t = 0.01f;
 
                 for (int iter = 0; iter < _RM_MAX_STEPS; ++iter)
                 {
