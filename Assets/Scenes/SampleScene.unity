@@ -205,7 +205,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170076733}
   m_LocalRotation: {x: -0, y: -0.6955503, z: -0, w: 0.7184774}
-  m_LocalPosition: {x: 129.3, y: 118.4, z: 36.8}
+  m_LocalPosition: {x: 8.09, y: 28.17, z: 26.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -304,24 +304,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 534669902}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 715070f087a75a34dac762e9ae7a278e, type: 3}
+  m_Script: {fileID: 11500000, guid: bcdc44dac6207a0478a93072b9c99492, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Shader: {fileID: 4800000, guid: cbd0cc42146921a4cbe053a37aedb4cf, type: 3}
-  _RM_MaxDist: 10000
-  _RM_MaxSteps: 1000
+  _Shader: {fileID: 4800000, guid: e4da0e23dfd3e22448f100f0d5a9589f, type: 3}
+  _RM_MaxDist: 1000
+  _RM_MaxSteps: 500
   _RM_SurfaceDistance: 0.0001
-  _Sphere1: {x: 0, y: 0, z: 0, w: 8.95}
-  _Cube1: {x: 0, y: 0, z: 0, w: 4.84}
-  _Cube1RoundingRadius: 2.32
-  _GroundPlane: {x: 0, y: 1, z: 0, w: 6.57}
-  _MainColor: {r: 0.9235716, g: 0.9811321, b: 0.06016379, a: 0}
+  _Sphere1: {x: 0, y: 0, z: 0, w: 4.04}
+  _Cube1: {x: 0, y: 0, z: 0, w: 3.21}
+  _Cube1RoundingRadius: 0
+  _GroundPlane: {x: 0, y: 1, z: 0, w: 3.21}
+  _MainColor: {r: 0.9622642, g: 0.93515784, b: 0.36765754, a: 0}
   _LightTransform: {fileID: 170076735}
-  _LightColor: {r: 1, g: 1, b: 1, a: 0}
-  _LightAmbientIntensity: 0.1
-  _AOStepSize: 0.1
-  _AOMaxIterations: 1
-  _AOIntensity: 0.1
+  _LightColor: {r: 0.9811321, g: 0.9579922, b: 0.9579922, a: 0}
+  _LightAmbientIntensity: 0
+  _AOStepSize: 0.3
+  _AOMaxIterations: 2
+  _AOIntensity: 0.03
   _ShadowDist: {x: 0.1, y: 1000}
-  _ShadowIntensity: 1.72
-  _PenumbraFactor: 3.53
+  _ShadowIntensity: 1.1
+  _PenumbraFactor: 3.3

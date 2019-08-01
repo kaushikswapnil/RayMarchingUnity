@@ -35,6 +35,7 @@ shader "Swapnil/RaymarchingShader"
             uniform float _RM_MAX_DIST;
             uniform int _RM_MAX_STEPS;
             uniform float _RM_SURF_DIST;
+            uniform float _SmoothingFactor;
 
             uniform float2 _ShadowDist;
             uniform float _ShadowIntensity;
@@ -79,8 +80,7 @@ shader "Swapnil/RaymarchingShader"
                 float cube1 = sdRoundBox(fromPos - float3(_Cube1.xyz), float3(_Cube1.www), _Cube1RoundingRadius);
                 //float cube1 = sdBox(fromPos - float3(_Cube1.xyz), float3(_Cube1.www));
 
-
-                return opS(sphere1, cube1);
+                return opUS(sphere1, cube1, _SmoothingFactor);
             }
 
             float DistanceField(float3 fromPos)

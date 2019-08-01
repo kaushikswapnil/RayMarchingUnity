@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cacheType: 6
-  lastUpdatedAtString: 2019-07-30T23:28:39.716+05:30
-  initializedAtString: 2019-07-30T23:28:39.716+05:30
+  lastUpdatedAtString: 2019-08-01T22:56:00.615+05:30
+  initializedAtString: 2019-08-01T21:55:46.949+05:30
   entries:
   - path: Assembly-CSharp.csproj
     fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Assembly-CSharp.csproj
@@ -25,6 +25,24 @@ MonoBehaviour:
   - path: Assembly-CSharp-Editor-firstpass.csproj
     fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Assembly-CSharp-Editor-firstpass.csproj
     projectPath: Assembly-CSharp-Editor-firstpass.csproj
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: Assets\DistanceFunctions.cginc
+    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Assets\DistanceFunctions.cginc
+    projectPath: Assets\DistanceFunctions.cginc
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: Assets\RaymarchCamera.cs
+    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Assets\RaymarchCamera.cs
+    projectPath: Assets\RaymarchCamera.cs
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: Assets\RaymarchingShader.shader
+    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Assets\RaymarchingShader.shader
+    projectPath: Assets\RaymarchingShader.shader
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
@@ -43,12 +61,6 @@ MonoBehaviour:
   - path: Library\assetDatabase3
     fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\assetDatabase3
     projectPath: Library\assetDatabase3
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 3
-  - path: Library\CurrentLayout.dwlt
-    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\CurrentLayout.dwlt
-    projectPath: Library\CurrentLayout.dwlt
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
@@ -91,6 +103,12 @@ MonoBehaviour:
   - path: Library\gfu\cache\repoinfo.yaml
     fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\gfu\cache\repoinfo.yaml
     projectPath: Library\gfu\cache\repoinfo.yaml
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: Library\InspectorExpandedItems.asset
+    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\InspectorExpandedItems.asset
+    projectPath: Library\InspectorExpandedItems.asset
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
@@ -14757,13 +14775,7 @@ MonoBehaviour:
     projectPath: Library\ScriptAssemblies\Assembly-CSharp.dll
     originalPath: 
     indexStatus: 0
-    workTreeStatus: 5
-  - path: Library\ScriptAssemblies\Assembly-CSharp-Editor-firstpass.dll
-    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ScriptAssemblies\Assembly-CSharp-Editor-firstpass.dll
-    projectPath: Library\ScriptAssemblies\Assembly-CSharp-Editor-firstpass.dll
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 5
+    workTreeStatus: 3
   - path: Library\ScriptAssemblies\BuiltinAssemblies.stamp
     fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ScriptAssemblies\BuiltinAssemblies.stamp
     projectPath: Library\ScriptAssemblies\BuiltinAssemblies.stamp
@@ -14806,12 +14818,6 @@ MonoBehaviour:
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
-  - path: Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll
-    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll
-    projectPath: Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 3
   - path: Library\ScriptAssemblies\Unity.Timeline.dll
     fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ScriptAssemblies\Unity.Timeline.dll
     projectPath: Library\ScriptAssemblies\Unity.Timeline.dll
@@ -14848,15 +14854,99 @@ MonoBehaviour:
     originalPath: 
     indexStatus: 0
     workTreeStatus: 5
+  - path: Library\ShaderCache\0\09d643768aed25da8dc4b31020c9a366.bin
+    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ShaderCache\0\09d643768aed25da8dc4b31020c9a366.bin
+    projectPath: Library\ShaderCache\0\09d643768aed25da8dc4b31020c9a366.bin
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: Library\ShaderCache\1\16b2aea4fd80d1a088f897fd471351bc.bin
+    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ShaderCache\1\16b2aea4fd80d1a088f897fd471351bc.bin
+    projectPath: Library\ShaderCache\1\16b2aea4fd80d1a088f897fd471351bc.bin
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: Library\ShaderCache\1\19dcc65ea63b4edb21107179849a0ab6.bin
+    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ShaderCache\1\19dcc65ea63b4edb21107179849a0ab6.bin
+    projectPath: Library\ShaderCache\1\19dcc65ea63b4edb21107179849a0ab6.bin
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: Library\ShaderCache\5\54c56b4e94e578b0527cee7acef5568e.bin
+    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ShaderCache\5\54c56b4e94e578b0527cee7acef5568e.bin
+    projectPath: Library\ShaderCache\5\54c56b4e94e578b0527cee7acef5568e.bin
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: Library\ShaderCache\5\55b8778584e981fa49c166205689d97b.bin
+    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ShaderCache\5\55b8778584e981fa49c166205689d97b.bin
+    projectPath: Library\ShaderCache\5\55b8778584e981fa49c166205689d97b.bin
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: Library\ShaderCache\6\664dc4be5dd12db250c9ef703933d8f0.bin
+    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ShaderCache\6\664dc4be5dd12db250c9ef703933d8f0.bin
+    projectPath: Library\ShaderCache\6\664dc4be5dd12db250c9ef703933d8f0.bin
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: Library\ShaderCache\9\91bf6e65637e217328e7a774e1652173.bin
+    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ShaderCache\9\91bf6e65637e217328e7a774e1652173.bin
+    projectPath: Library\ShaderCache\9\91bf6e65637e217328e7a774e1652173.bin
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: Library\ShaderCache\9\94443919de348f38874eb23bfd11a92c.bin
+    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ShaderCache\9\94443919de348f38874eb23bfd11a92c.bin
+    projectPath: Library\ShaderCache\9\94443919de348f38874eb23bfd11a92c.bin
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: Library\ShaderCache\a\a5164ba53d58282bd742dadd476fe81f.bin
+    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ShaderCache\a\a5164ba53d58282bd742dadd476fe81f.bin
+    projectPath: Library\ShaderCache\a\a5164ba53d58282bd742dadd476fe81f.bin
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: Library\ShaderCache\b\b2ceec36c51769a3578a94fd90d11068.bin
+    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ShaderCache\b\b2ceec36c51769a3578a94fd90d11068.bin
+    projectPath: Library\ShaderCache\b\b2ceec36c51769a3578a94fd90d11068.bin
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: Library\ShaderCache\b\b70f6ae06a1fddfd36bcb8883e6dedf9.bin
+    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ShaderCache\b\b70f6ae06a1fddfd36bcb8883e6dedf9.bin
+    projectPath: Library\ShaderCache\b\b70f6ae06a1fddfd36bcb8883e6dedf9.bin
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: Library\ShaderCache\b\bbcadb061db40163bbfd1c818437b1f9.bin
+    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ShaderCache\b\bbcadb061db40163bbfd1c818437b1f9.bin
+    projectPath: Library\ShaderCache\b\bbcadb061db40163bbfd1c818437b1f9.bin
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: Library\ShaderCache\c\c235b90844fdfc9182d12113e8e9e43f.bin
+    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ShaderCache\c\c235b90844fdfc9182d12113e8e9e43f.bin
+    projectPath: Library\ShaderCache\c\c235b90844fdfc9182d12113e8e9e43f.bin
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
   - path: Library\ShaderCache\EditorEncounteredVariants
     fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ShaderCache\EditorEncounteredVariants
     projectPath: Library\ShaderCache\EditorEncounteredVariants
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
-  - path: Library\StateCache\SceneView\da02b5-mainStage.json
-    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\StateCache\SceneView\da02b5-mainStage.json
-    projectPath: Library\StateCache\SceneView\da02b5-mainStage.json
+  - path: Library\ShaderCache\f\f52b2254985c9d264bf3e54dff35c28d.bin
+    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ShaderCache\f\f52b2254985c9d264bf3e54dff35c28d.bin
+    projectPath: Library\ShaderCache\f\f52b2254985c9d264bf3e54dff35c28d.bin
     originalPath: 
-    indexStatus: 0
-    workTreeStatus: 3
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: Library\ShaderCache\f\fdfa02645cdf006f376c32493c4a3335.bin
+    fullPath: D:\Swapnil\Projects\source\repos\RayMarchingUnity\Library\ShaderCache\f\fdfa02645cdf006f376c32493c4a3335.bin
+    projectPath: Library\ShaderCache\f\fdfa02645cdf006f376c32493c4a3335.bin
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1

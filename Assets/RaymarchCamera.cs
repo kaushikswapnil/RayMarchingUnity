@@ -12,6 +12,7 @@ public class RaymarchCamera : SceneViewFilter
     public float _RM_MaxDist;
     public int _RM_MaxSteps;
     public float _RM_SurfaceDistance;
+    public float _SmoothingFactor;
 
     public Vector4 _Sphere1;
     public Vector4 _Cube1;
@@ -67,6 +68,8 @@ public class RaymarchCamera : SceneViewFilter
     		return;
     	}
 
+        _SmoothingFactor = 1.3f;
+
     	//Camera
     	_RaymarchMaterial.SetMatrix("_CameraFrustum", GetCameraFrustums(_Camera));
     	_RaymarchMaterial.SetMatrix("_CamToWorld", _Camera.cameraToWorldMatrix);
@@ -75,6 +78,7 @@ public class RaymarchCamera : SceneViewFilter
     	_RaymarchMaterial.SetFloat("_RM_MAX_DIST", _RM_MaxDist);
     	_RaymarchMaterial.SetInt("_RM_MAX_STEPS", _RM_MaxSteps);
     	_RaymarchMaterial.SetFloat("_RM_SURF_DIST", _RM_SurfaceDistance);
+        _RaymarchMaterial.SetFloat("_SmoothingFactor", _SmoothingFactor);
 
     	//Light
     	_RaymarchMaterial.SetVector("_LightPos", _LightTransform.position);
