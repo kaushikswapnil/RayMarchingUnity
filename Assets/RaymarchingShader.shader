@@ -198,10 +198,8 @@ shader "Swapnil/RaymarchingShader"
                 return normalize(normal);
             }
 
-            fixed4 Raymarch(float3 rayOrigin, float3 rayDir)
+            bool Raymarch(float3 rayOrigin, float3 rayDir, inout float3 collisionPoint, inout float collisionDist, inout int numSteps)
             {
-                fixed4 result = fixed4(0, 0, 0, 0);
-
                 float t = 0.01f;
 
                 for (int iter = 0; iter < _RM_MAX_STEPS; ++iter)
@@ -210,7 +208,6 @@ shader "Swapnil/RaymarchingShader"
                     if (t > _RM_MAX_DIST)
                     {
                         //environment
-                        result = fixed4(rayDir, 0.0f);
                         break;
                     }
 
@@ -219,16 +216,17 @@ shader "Swapnil/RaymarchingShader"
                     
                     if (d < _RM_SURF_DIST)
                     {
-                        float3 shading = CalculateShading(samplePos, GetNormalAt(samplePos));
-                        
-                        result = fixed4(shading, 1.0f);
+                        collisionPoint = samplePos;
+                        collisionDist = t;
+                        numSteps = iter + 1;
+                        return true;
                         break;
                     }  
 
                     t += d;                
                 }
 
-                return result;
+                return false;
             }
 
             v2f vert (appdata v)
@@ -256,7 +254,16 @@ shader "Swapnil/RaymarchingShader"
                 float3 rayDir = normalize(i.ray.xyz);
                 float3 rayOrigin = _WorldSpaceCameraPos;
 
-                fixed4 result = Raymarch(rayOrigin, rayDir);
+                fixed4 result = fixed4(0, 0, 0, 0);
+
+                float collisionDist;
+                float3 collisionPoint;
+                int numSteps;
+                if (Raymarch(rayOrigin, rayDir, collisionPoint, collisionDist, numSteps)) //We have collided
+                {
+                    fixed3 colAtPoint = CalculateShading(collisionPoint, GetNormalAt(collisionPoint));
+                    result = fixed4(colAtPoint, 1.0f);
+                }
 
                 fixed4 col = fixed4((colTex * (1.0 - result.w)) + (result.xyz * result.w), 1.0f);
                 return col;
