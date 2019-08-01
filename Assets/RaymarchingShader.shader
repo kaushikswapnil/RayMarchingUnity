@@ -36,14 +36,16 @@ shader "Swapnil/RaymarchingShader"
             uniform int _RM_MAX_STEPS;
             uniform float _RM_SURF_DIST;
 
-            uniform float _ShadowDistMin;
-            uniform float _ShadowDistMax;
+            uniform float2 _ShadowDist;
             uniform float _ShadowIntensity;
             uniform float _PenumbraFactor;
 
             uniform float3 _LightPos;
             uniform fixed4 _LightColor;
             uniform float _LightAmbientIntensity;
+            uniform float _AOStepSize;
+            uniform int _AOMaxIterations;
+            uniform float _AOIntensity;
 
             uniform fixed4 _MainColor;
 
@@ -90,7 +92,22 @@ shader "Swapnil/RaymarchingShader"
                 return opU(DF_Subject(fromPos), DF_Ground(fromPos));
             }
 
-            float CalculateHardShadowInvAt(float3 p, float3 rd, float tMin, float tMax, float dispToLight)
+            float CalculateAmbientOcclusionAt(float3 p, float n)
+            {
+                float step = _AOStepSize;
+                float ao = 0.0f;
+                float dist;
+
+                for (int iter = 1; iter <= _AOMaxIterations; ++iter)
+                {
+                    dist = step*iter;
+                    ao += max(0.0f, (dist - DF_Subject(p + (n*dist)))/dist);
+                }
+
+                return 1 - (ao*_AOIntensity);
+            }
+
+            float CalculateHardShadowInvAt(float3 p, float3 rd, float tMin, float tMax)
             {
             	//Check if point is in shadow
                 float t = tMin;
@@ -106,10 +123,6 @@ shader "Swapnil/RaymarchingShader"
                         shadowIntensity = 0.0f;
                         break;
                     }
-                    if (t > dispToLight) //dont travel farther than the light
-                    {
-                    	break;
-                    }
 
                     t += d;
                 }
@@ -117,7 +130,7 @@ shader "Swapnil/RaymarchingShader"
                 return shadowIntensity;
             }
 
-            float CalculateSoftShadowInvAt(float3 ro, float3 rd, float tMin, float tMax, float k, float distToLight)
+            float CalculateSoftShadowInvAt(float3 ro, float3 rd, float tMin, float tMax, float k)
             {
             	//Check if point is in shadow
                 float t = tMin;
@@ -131,11 +144,6 @@ shader "Swapnil/RaymarchingShader"
                         shadowIntensity = 0.0f;
                         break;
                     }
-                    //else if (t > distToLight)
-                    //{
-                    	//shadowIntensity = 1.0f;
-                    	//break;
-                    //}
 
 			        shadowIntensity = min( shadowIntensity, k*d/t );
 
@@ -151,17 +159,20 @@ shader "Swapnil/RaymarchingShader"
                 float3 lightDir = normalize(dispToLight);
 
                 float diffuseIntensity = (dot(lightDir, normalAtPoint)*0.5) + 0.5;
-                float shadowIntensity = CalculateSoftShadowInvAt(fromPos, lightDir, _ShadowDistMin, _ShadowDistMax, _PenumbraFactor, dispToLight);
+                float shadowIntensity = CalculateSoftShadowInvAt(fromPos, lightDir, _ShadowDist.x, _ShadowDist.y, _PenumbraFactor);
 
-                //float shadowIntensity = CalculateHardShadowInvAt(fromPos, lightDir, _ShadowDistMin, _ShadowDistMax, dispToLight);
+                //float shadowIntensity = CalculateHardShadowInvAt(fromPos, lightDir, _ShadowDist.x, _ShadowDist.y);
 
                 shadowIntensity = shadowIntensity*0.5 + 0.5;
 
                 shadowIntensity = max(0.0f, pow(shadowIntensity, _ShadowIntensity));
 
+                float ambientOcclusion = CalculateAmbientOcclusionAt(fromPos, normalAtPoint);
+
                 float totalLightIntensity = diffuseIntensity + _LightAmbientIntensity;
 
                 totalLightIntensity *= shadowIntensity;
+                totalLightIntensity *= ambientOcclusion;
 
                 return _LightColor.rgb * totalLightIntensity;
             }

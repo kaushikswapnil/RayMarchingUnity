@@ -24,8 +24,10 @@ public class RaymarchCamera : SceneViewFilter
     public Transform _LightTransform;
     public Color _LightColor;
     public float _LightAmbientIntensity;
-    public float _ShadowDistMin;
-    public float _ShadowDistMax;
+    public float _AOStepSize;
+    public int _AOMaxIterations;
+    public float _AOIntensity;
+    public Vector2 _ShadowDist;
     public float _ShadowIntensity;
     public float _PenumbraFactor;
 
@@ -79,11 +81,14 @@ public class RaymarchCamera : SceneViewFilter
     	_RaymarchMaterial.SetFloat("_LightAmbientIntensity", _LightAmbientIntensity);
         _RaymarchMaterial.SetColor("_LightColor", _LightColor);
 
+        _RaymarchMaterial.SetFloat("_AOStepSize", _AOStepSize);
+        _RaymarchMaterial.SetFloat("_AOIntensity", _AOIntensity);
+        _RaymarchMaterial.SetInt("_AOMaxIterations", _AOMaxIterations);
+
     	_RaymarchMaterial.SetColor("_MainColor", _MainColor);
 
     	_RaymarchMaterial.SetFloat("_ShadowIntensity", _ShadowIntensity);
-    	_RaymarchMaterial.SetFloat("_ShadowDistMin", _ShadowDistMin);
-    	_RaymarchMaterial.SetFloat("_ShadowDistMax", _ShadowDistMax);
+    	_RaymarchMaterial.SetVector("_ShadowDist", _ShadowDist);
         _RaymarchMaterial.SetFloat("_PenumbraFactor", _PenumbraFactor);
 
     	//Scene
