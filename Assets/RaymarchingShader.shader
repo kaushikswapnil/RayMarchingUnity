@@ -69,6 +69,13 @@ shader "Swapnil/RaymarchingShader"
                 float3 ray : TEXCOORD1;
             };
 
+            float3 RotateY(float3 p, float degree)
+            {
+            	float theta = degree*0.0174533f;
+            	return float3(0,0, 0);
+            	//float3(cos())
+            }
+
             float DF_Ground(float3 fromPos)
             {
                 return sdPlane(fromPos, float4(_Ground.xyzw));
