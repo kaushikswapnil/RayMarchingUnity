@@ -68,8 +68,6 @@ public class RaymarchCamera : SceneViewFilter
     		return;
     	}
 
-        _SmoothingFactor = 1.3f;
-
     	//Camera
     	_RaymarchMaterial.SetMatrix("_CameraFrustum", GetCameraFrustums(_Camera));
     	_RaymarchMaterial.SetMatrix("_CamToWorld", _Camera.cameraToWorldMatrix);
