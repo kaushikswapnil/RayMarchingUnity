@@ -48,11 +48,16 @@ shader "Swapnil/RaymarchingShader"
             uniform int _AOMaxIterations;
             uniform float _AOIntensity;
 
+            uniform samplerCUBE _ReflectionCubemap;
+            uniform float _ReflectionIntensity;
+            uniform int _ReflectionCount;
+
             uniform fixed4 _MainColor;
 
             uniform float4 _Sphere1;
             uniform float4 _Cube1;
             uniform float _Cube1RoundingRadius;
+            uniform float _RotationDegree;
 
             uniform fixed4 _Ground;
 
@@ -72,8 +77,10 @@ shader "Swapnil/RaymarchingShader"
             float3 RotateY(float3 p, float degree)
             {
             	float theta = degree*0.0174533f;
-            	return float3(0,0, 0);
-            	//float3(cos())
+            	float cosTheta = cos(theta);
+            	float sinTheta = sin(theta);
+
+            	return float3(cosTheta*p.x - sinTheta*p.z,p.y, sinTheta*p.x + cosTheta*p.z);
             }
 
             float DF_Ground(float3 fromPos)
@@ -96,7 +103,15 @@ shader "Swapnil/RaymarchingShader"
                 //pMod1(fromPos.x, 4);
                 //pMod1(fromPos.y, 4);
                 //pMod1(fromPos.z, 4);
-                return opU(DF_Subject(fromPos), DF_Ground(fromPos));
+                float dfSub = DF_Subject(fromPos);
+                float dfGround = DF_Ground(fromPos);
+
+                for (int iter = 0; iter < 8; ++iter)
+                {
+                	dfSub = opU(dfSub, DF_Subject(RotateY(fromPos, 10*iter)));
+                }
+
+                return opU(dfSub, dfGround);
             }
 
             float CalculateAmbientOcclusionAt(float3 p, float n)

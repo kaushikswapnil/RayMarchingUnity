@@ -18,6 +18,7 @@ public class RaymarchCamera : SceneViewFilter
     public Vector4 _Cube1;
     public float _Cube1RoundingRadius;
     public Vector4 _GroundPlane;
+    public float _RotationDegree;
 
     public Color _MainColor;
 
@@ -31,6 +32,11 @@ public class RaymarchCamera : SceneViewFilter
     public Vector2 _ShadowDist;
     public float _ShadowIntensity;
     public float _PenumbraFactor;
+
+    [Header("Reflection")]
+    public Cubemap _ReflectionCubemap;
+    public int _ReflectionCount;
+    public float _ReflectionIntensity;
 
     public Material _RaymarchMaterial
     {
@@ -93,11 +99,17 @@ public class RaymarchCamera : SceneViewFilter
     	_RaymarchMaterial.SetVector("_ShadowDist", _ShadowDist);
         _RaymarchMaterial.SetFloat("_PenumbraFactor", _PenumbraFactor);
 
+        //Reflection
+        _RaymarchMaterial.SetFloat("_ReflectionIntensity", _ReflectionIntensity);
+        _RaymarchMaterial.SetInt("_ReflectionCount;", _ReflectionCount);
+        _RaymarchMaterial.SetTexture("_ReflectionCubemap", _ReflectionCubemap);
+
     	//Scene
     	_RaymarchMaterial.SetVector("_Sphere1", _Sphere1);
     	_RaymarchMaterial.SetVector("_Cube1", _Cube1);
         _RaymarchMaterial.SetFloat("_Cube1RoundingRadius", _Cube1RoundingRadius);
     	_RaymarchMaterial.SetVector("_Ground", _GroundPlane);
+        _RaymarchMaterial.SetFloat("_RotationDegree", _RotationDegree);
 
     	RenderTexture.active = destination;
         _RaymarchMaterial.SetTexture("_MainTex", source);

@@ -304,25 +304,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 534669902}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 715070f087a75a34dac762e9ae7a278e, type: 3}
+  m_Script: {fileID: 11500000, guid: bcdc44dac6207a0478a93072b9c99492, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Shader: {fileID: 4800000, guid: cbd0cc42146921a4cbe053a37aedb4cf, type: 3}
+  _Shader: {fileID: 4800000, guid: e4da0e23dfd3e22448f100f0d5a9589f, type: 3}
   _RM_MaxDist: 1000
   _RM_MaxSteps: 500
   _RM_SurfaceDistance: 0.0001
-  _SmoothingFactor: 0.97
-  _Sphere1: {x: 0, y: 0, z: 0, w: 4.39}
-  _Cube1: {x: 0, y: 0, z: 0, w: 3.24}
+  _SmoothingFactor: 1
+  _Sphere1: {x: 0.57, y: 0, z: -1.92, w: 1.74}
+  _Cube1: {x: 2.22, y: 0, z: 2.01, w: 1.59}
   _Cube1RoundingRadius: 0
-  _GroundPlane: {x: 0, y: 1, z: 0, w: 3.63}
-  _MainColor: {r: 0.9910195, g: 1, b: 0.3066038, a: 0}
+  _GroundPlane: {x: 0, y: 1, z: 0, w: 1.63}
+  _MainColor: {r: 0.9716981, g: 0.93966746, b: 0.16042183, a: 0}
   _LightTransform: {fileID: 170076735}
-  _LightColor: {r: 0.9437249, g: 0.9622642, b: 0.92141336, a: 0}
-  _LightAmbientIntensity: 0.1
-  _AOStepSize: 0.3
+  _LightColor: {r: 0.990566, g: 0.98989457, b: 0.98589355, a: 0}
+  _LightAmbientIntensity: 0
+  _AOStepSize: 0.2
   _AOMaxIterations: 2
   _AOIntensity: 0.1
   _ShadowDist: {x: 0.1, y: 1000}
-  _ShadowIntensity: 1
+  _ShadowIntensity: 0.5
   _PenumbraFactor: 3
