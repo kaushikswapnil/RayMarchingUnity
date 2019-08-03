@@ -48,7 +48,8 @@ shader "Swapnil/RaymarchingShader"
             uniform int _AOMaxIterations;
             uniform float _AOIntensity;
 
-            uniform samplerCUBE _ReflectionCubemap;
+            uniform samplerCUBE _EnvReflectionCubemap;
+            uniform float _EnvReflectionIntensity;
             uniform float _ReflectionIntensity;
             uniform int _ReflectionCount;
 
@@ -58,6 +59,7 @@ shader "Swapnil/RaymarchingShader"
             uniform float4 _Cube1;
             uniform float _Cube1RoundingRadius;
             uniform float _RotationDegree;
+            uniform int _NumRotatedCopies;
 
             uniform fixed4 _Ground;
 
@@ -106,9 +108,9 @@ shader "Swapnil/RaymarchingShader"
                 float dfSub = DF_Subject(fromPos);
                 float dfGround = DF_Ground(fromPos);
 
-                for (int iter = 0; iter < 8; ++iter)
+                for (int iter = 1; iter <= _NumRotatedCopies; ++iter)
                 {
-                	dfSub = opU(dfSub, DF_Subject(RotateY(fromPos, 10*iter)));
+                	dfSub = opU(dfSub, DF_Subject(RotateY(fromPos, _RotationDegree*iter)));
                 }
 
                 return opU(dfSub, dfGround);
@@ -220,14 +222,14 @@ shader "Swapnil/RaymarchingShader"
                 return normalize(normal);
             }
 
-            bool Raymarch(float3 rayOrigin, float3 rayDir, inout float3 collisionPoint, inout float collisionDist, inout int numSteps)
+            bool Raymarch(float3 rayOrigin, float3 rayDir, inout float3 collisionPoint, inout float collisionDist, inout int numSteps, int rm_maxIterations, float rm_maxDistance)
             {
                 float t = 0.01f;
 
-                for (int iter = 0; iter < _RM_MAX_STEPS; ++iter)
+                for (int iter = 0; iter < rm_maxIterations; ++iter)
                 {
 
-                    if (t > _RM_MAX_DIST)
+                    if (t > rm_maxDistance)
                     {
                         //environment
                         break;
@@ -281,10 +283,38 @@ shader "Swapnil/RaymarchingShader"
                 float collisionDist;
                 float3 collisionPoint;
                 int numSteps;
-                if (Raymarch(rayOrigin, rayDir, collisionPoint, collisionDist, numSteps)) //We have collided
+                if (Raymarch(rayOrigin, rayDir, collisionPoint, collisionDist, numSteps, _RM_MAX_STEPS, _RM_MAX_DIST)) //We have collided
                 {
-                    fixed3 colAtPoint = CalculateShading(collisionPoint, GetNormalAt(collisionPoint));
+                	fixed3 normalAtCollisionPoint = GetNormalAt(collisionPoint);
+                    fixed3 colAtPoint = CalculateShading(collisionPoint, normalAtCollisionPoint);
                     result = fixed4(colAtPoint, 1.0f);
+
+                    bool reflectEnv = (_ReflectionCount > 0);
+
+                    for (int refIter = 0; refIter < _ReflectionCount; ++refIter)
+                    {
+                    	rayDir = normalize(reflect(rayDir, normalAtCollisionPoint));
+                    	rayOrigin = collisionPoint + (rayDir*0.01f);
+                    	
+                    	if (Raymarch(rayOrigin, rayDir, collisionPoint, collisionDist, numSteps, _RM_MAX_STEPS*0.5f, _RM_MAX_DIST/2))
+                    	{
+                    		normalAtCollisionPoint = GetNormalAt(collisionPoint);
+                    		colAtPoint = CalculateShading(collisionPoint, normalAtCollisionPoint);
+
+                    		result += fixed4(colAtPoint*_ReflectionIntensity*0.5, 0);
+
+                    		if (reflectEnv == true)
+                    		{
+                    			reflectEnv = false;
+                    		}
+                    	}
+                    }
+
+                    //Env reflection
+                    if (reflectEnv)
+                    {
+                    	result += fixed4(texCUBE(_EnvReflectionCubemap, normalAtCollisionPoint).rgb * _EnvReflectionIntensity * _ReflectionIntensity, 0.0f);
+                    }                    
                 }
 
                 fixed4 col = fixed4((colTex * (1.0 - result.w)) + (result.xyz * result.w), 1.0f);

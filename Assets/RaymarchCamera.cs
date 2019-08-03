@@ -9,9 +9,13 @@ public class RaymarchCamera : SceneViewFilter
 	[SerializeField]
     private Shader _Shader;
 
+    [Min(0)]
     public float _RM_MaxDist;
+    [Min(0)]
     public int _RM_MaxSteps;
+    [Min(0)]
     public float _RM_SurfaceDistance;
+    [Min(0)]
     public float _SmoothingFactor;
 
     public Vector4 _Sphere1;
@@ -19,24 +23,36 @@ public class RaymarchCamera : SceneViewFilter
     public float _Cube1RoundingRadius;
     public Vector4 _GroundPlane;
     public float _RotationDegree;
+    [Min(0)]
+    public int _NumRotatedCopies;
 
     public Color _MainColor;
 
     [Header("Light & Shadow")]
     public Transform _LightTransform;
     public Color _LightColor;
+    [Range(0,1)]
     public float _LightAmbientIntensity;
+    [Range(0,2)]
     public float _AOStepSize;
+    [Range(0,3)]
     public int _AOMaxIterations;
+    [Range(0,1)]
     public float _AOIntensity;
     public Vector2 _ShadowDist;
+    [Range(0,5)]
     public float _ShadowIntensity;
+    [Range(0,24)]
     public float _PenumbraFactor;
 
     [Header("Reflection")]
-    public Cubemap _ReflectionCubemap;
+    public Cubemap _EnvReflectionCubemap;
+    [Range(0,3)]
     public int _ReflectionCount;
+    [Range(0,1)]
     public float _ReflectionIntensity;
+    [Range(0,1)]
+    public float _EnvReflectionIntensity;
 
     public Material _RaymarchMaterial
     {
@@ -101,8 +117,9 @@ public class RaymarchCamera : SceneViewFilter
 
         //Reflection
         _RaymarchMaterial.SetFloat("_ReflectionIntensity", _ReflectionIntensity);
-        _RaymarchMaterial.SetInt("_ReflectionCount;", _ReflectionCount);
-        _RaymarchMaterial.SetTexture("_ReflectionCubemap", _ReflectionCubemap);
+        _RaymarchMaterial.SetInt("_ReflectionCount", _ReflectionCount);
+        _RaymarchMaterial.SetTexture("_EnvReflectionCubemap", _EnvReflectionCubemap);
+        _RaymarchMaterial.SetFloat("_EnvReflectionIntensity", _EnvReflectionIntensity);
 
     	//Scene
     	_RaymarchMaterial.SetVector("_Sphere1", _Sphere1);
@@ -110,6 +127,7 @@ public class RaymarchCamera : SceneViewFilter
         _RaymarchMaterial.SetFloat("_Cube1RoundingRadius", _Cube1RoundingRadius);
     	_RaymarchMaterial.SetVector("_Ground", _GroundPlane);
         _RaymarchMaterial.SetFloat("_RotationDegree", _RotationDegree);
+        _RaymarchMaterial.SetInt("_NumRotatedCopies", _NumRotatedCopies);
 
     	RenderTexture.active = destination;
         _RaymarchMaterial.SetTexture("_MainTex", source);
