@@ -54,6 +54,7 @@ shader "Swapnil/RaymarchingShader"
             uniform int _ReflectionCount;
 
             uniform float4 _SpaceFoldingSettings;
+            uniform float4 _GlowSettings;
 
             uniform fixed4 _MainColor;
 
@@ -239,9 +240,10 @@ shader "Swapnil/RaymarchingShader"
                 return normalize(normal);
             }
 
-            bool Raymarch(float3 rayOrigin, float3 rayDir, inout float3 collisionPoint, inout float collisionDist, inout int numSteps, int rm_maxIterations, float rm_maxDistance)
+            bool Raymarch(float3 rayOrigin, float3 rayDir, inout float3 collisionPoint, inout float collisionDist, inout int numSteps, inout float recordDistance, int rm_maxIterations, float rm_maxDistance)
             {
                 float t = 0.01f;
+                recordDistance = rm_maxDistance;
 
                 for (int iter = 0; iter < rm_maxIterations; ++iter)
                 {
@@ -254,6 +256,7 @@ shader "Swapnil/RaymarchingShader"
 
                     float3 samplePos = rayOrigin + (rayDir*t);
                     float d = DistanceField(samplePos);
+                    recordDistance = min(recordDistance, d);
                     
                     if (d < _RM_SURF_DIST)
                     {
@@ -299,12 +302,20 @@ shader "Swapnil/RaymarchingShader"
 
                 float collisionDist;
                 float3 collisionPoint;
+                float recordDistance;
                 int numSteps;
-                if (Raymarch(rayOrigin, rayDir, collisionPoint, collisionDist, numSteps, _RM_MAX_STEPS, _RM_MAX_DIST)) //We have collided
+                if (Raymarch(rayOrigin, rayDir, collisionPoint, collisionDist, numSteps, recordDistance, _RM_MAX_STEPS, _RM_MAX_DIST)) //We have collided
                 {
                 	fixed3 normalAtCollisionPoint = GetNormalAt(collisionPoint);
                     fixed3 colAtPoint = CalculateShading(collisionPoint, normalAtCollisionPoint);
                     result = fixed4(colAtPoint, 1.0f);
+
+                    if (_GlowSettings.w > 0.0f)
+                    {
+                    	recordDistance = _GlowSettings.w - recordDistance;
+                		float glowIntensity = recordDistance/_GlowSettings.w;
+                		result += fixed4(_GlowSettings.xyz*glowIntensity*0.5f, 0.0f);
+                    }
 
                     bool reflectEnv = (_ReflectionCount > 0);
 
@@ -313,7 +324,7 @@ shader "Swapnil/RaymarchingShader"
                     	rayDir = normalize(reflect(rayDir, normalAtCollisionPoint));
                     	rayOrigin = collisionPoint + (rayDir*0.01f);
                     	
-                    	if (Raymarch(rayOrigin, rayDir, collisionPoint, collisionDist, numSteps, _RM_MAX_STEPS*0.5f, _RM_MAX_DIST/2))
+                    	if (Raymarch(rayOrigin, rayDir, collisionPoint, collisionDist, numSteps, recordDistance,_RM_MAX_STEPS*0.5f, _RM_MAX_DIST/2))
                     	{
                     		normalAtCollisionPoint = GetNormalAt(collisionPoint);
                     		colAtPoint = CalculateShading(collisionPoint, normalAtCollisionPoint);
@@ -332,6 +343,12 @@ shader "Swapnil/RaymarchingShader"
                     {
                     	result += fixed4(texCUBE(_EnvReflectionCubemap, normalAtCollisionPoint).rgb * _EnvReflectionIntensity * _ReflectionIntensity, 0.0f);
                     }                    
+                }
+                else if (_GlowSettings.w > 0.f && recordDistance < _GlowSettings.w)
+                {
+                	recordDistance = _GlowSettings.w - recordDistance;
+                	float glowIntensity = recordDistance/_GlowSettings.w;
+                	result = fixed4(_GlowSettings.xyz*glowIntensity, glowIntensity);
                 }
 
                 fixed4 col = fixed4((colTex * (1.0 - result.w)) + (result.xyz * result.w), 1.0f);
