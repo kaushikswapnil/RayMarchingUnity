@@ -64,7 +64,17 @@ float opI(float d1, float d2)
 	return max(d1, d2);
 }
 
+//elongates the shape
+//returns the distance offset
+float4 opElongate(float3 p, float3 h)
+{	
+	float3 q = abs(p) - h;
+	float4 w = float4( max(q, 0.0f), min( max( q.x, max(q.y, q.z) ), 0.0f ) );
+	return w;
+}
+
 // Mod Position Axis
+//basically opRepeat
 float pMod1 (inout float p, float size)
 {
 	float halfsize = size * 0.5;

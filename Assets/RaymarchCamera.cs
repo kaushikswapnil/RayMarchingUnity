@@ -57,6 +57,7 @@ public class RaymarchCamera : SceneViewFilter
     [Header("Effects")]
     public Vector4 _SpaceFoldingSettings;
     public Vector4 _GlowSettings;
+    public Vector4 _SubjectElongationSettings;
 
     public Material _RaymarchMaterial
     {
@@ -128,6 +129,7 @@ public class RaymarchCamera : SceneViewFilter
         //Effects
         _RaymarchMaterial.SetVector("_SpaceFoldingSettings", _SpaceFoldingSettings);
         _RaymarchMaterial.SetVector("_GlowSettings", _GlowSettings);
+        _RaymarchMaterial.SetVector("_SubjectElongationSettings", _SubjectElongationSettings);
 
     	//Scene
     	_RaymarchMaterial.SetVector("_Sphere1", _Sphere1);

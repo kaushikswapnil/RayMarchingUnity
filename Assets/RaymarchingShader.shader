@@ -55,6 +55,7 @@ shader "Swapnil/RaymarchingShader"
 
             uniform float4 _SpaceFoldingSettings;
             uniform float4 _GlowSettings;
+            uniform float4 _SubjectElongationSettings;
 
             uniform fixed4 _MainColor;
 
@@ -95,8 +96,17 @@ shader "Swapnil/RaymarchingShader"
 
             float DF_Subject(float3 fromPos)
             {
-                float sphere1 = sdSphere(fromPos - float3(_Sphere1.xyz), _Sphere1.w);
-                float cube1 = sdRoundBox(fromPos - float3(_Cube1.xyz), float3(_Cube1.www), _Cube1RoundingRadius);
+            	float4 pSphere1 = float4(fromPos - float3(_Sphere1.xyz), 0.0f);;
+                float4 pCube1 = float4(fromPos - float3(_Cube1.xyz), 0.0f);
+
+                if (_SubjectElongationSettings.w > 0.0f)
+                {
+                	pSphere1 = opElongate(pSphere1.xyz, _SubjectElongationSettings.xyz);
+                	pCube1 = opElongate(pCube1.xyz, _SubjectElongationSettings.xyz);
+                }
+
+                float sphere1 = pSphere1.w + sdSphere(pSphere1.xyz, _Sphere1.w);
+                float cube1 = pCube1.w + sdRoundBox( pCube1.xyz, float3(_Cube1.www), _Cube1RoundingRadius);
                 //float cube1 = sdBox(fromPos - float3(_Cube1.xyz), float3(_Cube1.www));
 
                 return opS(sphere1, cube1);
@@ -123,6 +133,7 @@ shader "Swapnil/RaymarchingShader"
 	                return dfSub;
             	}
 
+            	//Perform ground df before subject operations
                 float dfGround = DF_Ground(p);
                 float dfSub = DF_Subject(p);
 
@@ -314,7 +325,7 @@ shader "Swapnil/RaymarchingShader"
                     {
                     	recordDistance = _GlowSettings.w - recordDistance;
                 		float glowIntensity = recordDistance/_GlowSettings.w;
-                		result += fixed4(_GlowSettings.xyz*glowIntensity*0.5f, 0.0f);
+                		result += fixed4(_GlowSettings.xyz*glowIntensity, 0.0f);
                     }
 
                     bool reflectEnv = (_ReflectionCount > 0);
