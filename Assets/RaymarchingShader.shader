@@ -56,6 +56,7 @@ shader "Swapnil/RaymarchingShader"
             uniform float4 _SpaceFoldingSettings;
             uniform float4 _GlowSettings;
             uniform float4 _SubjectElongationSettings;
+            uniform float4 _SubjectTwistingSettings;
 
             uniform fixed4 _MainColor;
 
@@ -80,15 +81,6 @@ shader "Swapnil/RaymarchingShader"
                 float3 ray : TEXCOORD1;
             };
 
-            float3 RotateY(float3 p, float degree)
-            {
-            	float theta = degree*0.0174533f;
-            	float cosTheta = cos(theta);
-            	float sinTheta = sin(theta);
-
-            	return float3(cosTheta*p.x - sinTheta*p.z,p.y, sinTheta*p.x + cosTheta*p.z);
-            }
-
             float DF_Ground(float3 fromPos)
             {
                 return sdPlane(fromPos, float4(_Ground.xyzw));
@@ -96,6 +88,7 @@ shader "Swapnil/RaymarchingShader"
 
             float DF_Subject(float3 fromPos)
             {
+            	//w is used for elongation offset
             	float4 pSphere1 = float4(fromPos - float3(_Sphere1.xyz), 0.0f);;
                 float4 pCube1 = float4(fromPos - float3(_Cube1.xyz), 0.0f);
 
@@ -105,12 +98,18 @@ shader "Swapnil/RaymarchingShader"
                 	pCube1 = opElongate(pCube1.xyz, _SubjectElongationSettings.xyz);
                 }
 
+                if (_SubjectTwistingSettings.w > 0.0f)
+                {
+                	pSphere1 = float4(opTwistY(pSphere1.xyz, _SubjectTwistingSettings.y), pSphere1.w);
+                	pCube1 = float4(opTwistY(pCube1.xyz, _SubjectTwistingSettings.y), pCube1.w);
+                }
+
                 float sphere1 = pSphere1.w + sdSphere(pSphere1.xyz, _Sphere1.w);
                 float cube1 = pCube1.w + sdRoundBox( pCube1.xyz, float3(_Cube1.www), _Cube1RoundingRadius);
                 //float cube1 = sdBox(fromPos - float3(_Cube1.xyz), float3(_Cube1.www));
 
-                return opS(sphere1, cube1);
-                //return opUS(sphere1, cube1, _SmoothingFactor);
+                //return opS(sphere1, cube1);
+                return opUS(sphere1, cube1, _SmoothingFactor);
             }
 
             float DistanceField(float3 fromPos)
@@ -118,7 +117,7 @@ shader "Swapnil/RaymarchingShader"
             	float3 p = fromPos;
 
             	//Space folding is enabled
-            	if (_SpaceFoldingSettings.w)
+            	if (_SpaceFoldingSettings.w > 0.f)
             	{
             		pMod1(p.x, _SpaceFoldingSettings.x);
 	                pMod1(p.y, _SpaceFoldingSettings.y);
@@ -127,7 +126,7 @@ shader "Swapnil/RaymarchingShader"
 
 	                for (int iter = 1; iter <= _NumRotatedCopies; ++iter)
 	                {
-	                	dfSub = opU(dfSub, DF_Subject(RotateY(p, _RotationDegree*iter)));
+	                	dfSub = opU(dfSub, DF_Subject(opRotateY(p, _RotationDegree*iter)));
 	                }
 	                
 	                return dfSub;
@@ -139,7 +138,7 @@ shader "Swapnil/RaymarchingShader"
 
                 for (int iter = 1; iter <= _NumRotatedCopies; ++iter)
                 {
-                	dfSub = opU(dfSub, DF_Subject(RotateY(p, _RotationDegree*iter)));
+                	dfSub = opU(dfSub, DF_Subject(opRotateY(p, _RotationDegree*iter)));
                 }
 
                 return opU(dfSub, dfGround);

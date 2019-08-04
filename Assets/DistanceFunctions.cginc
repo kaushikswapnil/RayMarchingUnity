@@ -73,6 +73,26 @@ float4 opElongate(float3 p, float3 h)
 	return w;
 }
 
+float3 opTwistY(float3 p, float k)
+{
+    float c = cos(k*p.y);
+	float s = sin(k*p.y);
+
+	float2x2 m = float2x2(c, s, -s, c);
+	float2 pXZ = m*float2x1(p.xz);
+	//return float3(pXZ, p.y);
+	return float3(pXZ.x, p.y, pXZ.y);
+}
+
+float3 opRotateY(float3 p, float degree)
+{
+	float theta = degree*0.0174533f;
+	float cosTheta = cos(theta);
+	float sinTheta = sin(theta);
+
+	return float3(cosTheta*p.x - sinTheta*p.z,p.y, sinTheta*p.x + cosTheta*p.z);
+}
+
 // Mod Position Axis
 //basically opRepeat
 float pMod1 (inout float p, float size)
