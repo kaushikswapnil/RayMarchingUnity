@@ -53,6 +53,8 @@ shader "Swapnil/RaymarchingShader"
             uniform float _ReflectionIntensity;
             uniform int _ReflectionCount;
 
+            uniform float4 _SpaceFoldingSettings;
+
             uniform fixed4 _MainColor;
 
             uniform float4 _Sphere1;
@@ -96,21 +98,36 @@ shader "Swapnil/RaymarchingShader"
                 float cube1 = sdRoundBox(fromPos - float3(_Cube1.xyz), float3(_Cube1.www), _Cube1RoundingRadius);
                 //float cube1 = sdBox(fromPos - float3(_Cube1.xyz), float3(_Cube1.www));
 
-                return opUS(sphere1, cube1, _SmoothingFactor);
+                return opS(sphere1, cube1);
+                //return opUS(sphere1, cube1, _SmoothingFactor);
             }
 
             float DistanceField(float3 fromPos)
             {
-                //float3 fromPos = float3(fromPos1.xyz);
-                //pMod1(fromPos.x, 4);
-                //pMod1(fromPos.y, 4);
-                //pMod1(fromPos.z, 4);
-                float dfSub = DF_Subject(fromPos);
-                float dfGround = DF_Ground(fromPos);
+            	float3 p = fromPos;
+
+            	//Space folding is enabled
+            	if (_SpaceFoldingSettings.w)
+            	{
+            		pMod1(p.x, _SpaceFoldingSettings.x);
+	                pMod1(p.y, _SpaceFoldingSettings.y);
+	                pMod1(p.z, _SpaceFoldingSettings.z);
+	                float dfSub = DF_Subject(p);
+
+	                for (int iter = 1; iter <= _NumRotatedCopies; ++iter)
+	                {
+	                	dfSub = opU(dfSub, DF_Subject(RotateY(p, _RotationDegree*iter)));
+	                }
+	                
+	                return dfSub;
+            	}
+
+                float dfGround = DF_Ground(p);
+                float dfSub = DF_Subject(p);
 
                 for (int iter = 1; iter <= _NumRotatedCopies; ++iter)
                 {
-                	dfSub = opU(dfSub, DF_Subject(RotateY(fromPos, _RotationDegree*iter)));
+                	dfSub = opU(dfSub, DF_Subject(RotateY(p, _RotationDegree*iter)));
                 }
 
                 return opU(dfSub, dfGround);

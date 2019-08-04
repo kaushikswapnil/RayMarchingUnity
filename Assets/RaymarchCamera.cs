@@ -54,6 +54,9 @@ public class RaymarchCamera : SceneViewFilter
     [Range(0,1)]
     public float _EnvReflectionIntensity;
 
+    [Header("Effects")]
+    public Vector4 _SpaceFoldingSettings;
+
     public Material _RaymarchMaterial
     {
     	get
@@ -120,6 +123,9 @@ public class RaymarchCamera : SceneViewFilter
         _RaymarchMaterial.SetInt("_ReflectionCount", _ReflectionCount);
         _RaymarchMaterial.SetTexture("_EnvReflectionCubemap", _EnvReflectionCubemap);
         _RaymarchMaterial.SetFloat("_EnvReflectionIntensity", _EnvReflectionIntensity);
+
+        //Effects
+        _RaymarchMaterial.SetVector("_SpaceFoldingSettings", _SpaceFoldingSettings);
 
     	//Scene
     	_RaymarchMaterial.SetVector("_Sphere1", _Sphere1);
