@@ -304,25 +304,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 534669902}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcdc44dac6207a0478a93072b9c99492, type: 3}
+  m_Script: {fileID: 11500000, guid: 715070f087a75a34dac762e9ae7a278e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Shader: {fileID: 4800000, guid: e4da0e23dfd3e22448f100f0d5a9589f, type: 3}
+  _Shader: {fileID: 4800000, guid: cbd0cc42146921a4cbe053a37aedb4cf, type: 3}
   _RM_MaxDist: 1000
   _RM_MaxSteps: 500
   _RM_SurfaceDistance: 0.0001
-  _SmoothingFactor: 1
-  _Sphere1: {x: 0.57, y: 0, z: -1.92, w: 1.74}
-  _Cube1: {x: 2.22, y: 0, z: 2.01, w: 1.59}
+  _SmoothingFactor: 0
+  _Sphere1: {x: 0, y: 18.4, z: 0, w: 4.22}
+  _Cube1: {x: 0, y: 18.5, z: 0, w: 3.48}
   _Cube1RoundingRadius: 0
-  _GroundPlane: {x: 0, y: 1, z: 0, w: 1.63}
-  _MainColor: {r: 0.9716981, g: 0.93966746, b: 0.16042183, a: 0}
+  _GroundPlane: {x: 0, y: 1, z: 0, w: 112.3}
+  _RotationDegree: 60
+  _NumRotatedCopies: 6
+  _MainColor: {r: 0.21333215, g: 0.886064, b: 0.9622642, a: 0}
   _LightTransform: {fileID: 170076735}
-  _LightColor: {r: 0.990566, g: 0.98989457, b: 0.98589355, a: 0}
+  _LightColor: {r: 0.8396226, g: 0.7960573, b: 0.7960573, a: 0}
   _LightAmbientIntensity: 0
-  _AOStepSize: 0.2
-  _AOMaxIterations: 2
-  _AOIntensity: 0.1
-  _ShadowDist: {x: 0.1, y: 1000}
-  _ShadowIntensity: 0.5
-  _PenumbraFactor: 3
+  _AOStepSize: 0
+  _AOMaxIterations: 0
+  _AOIntensity: 0
+  _ShadowDist: {x: 0, y: 0}
+  _ShadowIntensity: 0
+  _PenumbraFactor: 0
+  _EnvReflectionCubemap: {fileID: 8900000, guid: 656a59a5ff93c46498416d97e5c16b66,
+    type: 3}
+  _ReflectionCount: 1
+  _ReflectionIntensity: 0.541
+  _EnvReflectionIntensity: 0.593
+  _SpaceFoldingSettings: {x: 72.6, y: 111.8, z: 41.37, w: -4.21}
+  _GlowSettings: {x: 0.48, y: 0.69, z: 0.21, w: 44.21}
+  _SubjectElongationSettings: {x: 5.84, y: 0.1, z: 12.52, w: 0.15}
+  _SubjectTwistingSettings: {x: 0, y: 0, z: 0, w: 0}
+  _ShowcaseBehaviour: {fileID: 11400000, guid: f0411b6d7cc7b8b41920ff38ce9518c1, type: 2}

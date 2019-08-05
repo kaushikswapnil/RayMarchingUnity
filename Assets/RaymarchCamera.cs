@@ -9,13 +9,10 @@ public class RaymarchCamera : SceneViewFilter
 	[SerializeField]
     private Shader _Shader;
 
-    [HideInInspector]
     [Min(0)]
     public float _RM_MaxDist;
-    [HideInInspector]
     [Min(0)]
     public int _RM_MaxSteps;
-    [HideInInspector]
     [Min(0)]
     public float _RM_SurfaceDistance; 
 
@@ -30,12 +27,10 @@ public class RaymarchCamera : SceneViewFilter
     [Min(0)]
     public int _NumRotatedCopies;
 
-    [HideInInspector]
     public Color _MainColor;
 
     [Header("Light & Shadow")]
     public Transform _LightTransform;
-    [HideInInspector]
     public Color _LightColor;
     [Range(0,1)]
     public float _LightAmbientIntensity;
@@ -68,11 +63,6 @@ public class RaymarchCamera : SceneViewFilter
 
     [SerializeField]
     ShowcaseBehaviour _ShowcaseBehaviour;
-
-    void OnStart()
-    {
-        _ShowcaseBehaviour.OnStart();
-    }
 
     public Material _RaymarchMaterial
     {

@@ -108,8 +108,8 @@ shader "Swapnil/RaymarchingShader"
                 float cube1 = pCube1.w + sdRoundBox( pCube1.xyz, float3(_Cube1.www), _Cube1RoundingRadius);
                 //float cube1 = sdBox(fromPos - float3(_Cube1.xyz), float3(_Cube1.www));
 
-                //return opS(sphere1, cube1);
-                return opUS(sphere1, cube1, _SmoothingFactor);
+                return opS(sphere1, cube1);
+                //return opUS(sphere1, cube1, _SmoothingFactor);
             }
 
             float DistanceField(float3 fromPos)
@@ -322,8 +322,13 @@ shader "Swapnil/RaymarchingShader"
 
                     if (_GlowSettings.w > 0.0f)
                     {
-                    	recordDistance = _GlowSettings.w - recordDistance;
-                		float glowIntensity = recordDistance/_GlowSettings.w;
+                    	float glowIntensity = 0.5f;
+                        if (collisionDist > _GlowSettings.w)
+                        {
+                            glowIntensity *= _GlowSettings.w/collisionDist;
+                        }
+
+                		//float glowIntensity = recordDistance/_GlowSettings.w;
                 		result += fixed4(_GlowSettings.xyz*glowIntensity, 0.0f);
                     }
 
